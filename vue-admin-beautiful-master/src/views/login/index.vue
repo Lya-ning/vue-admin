@@ -155,26 +155,16 @@ export default {
             type: 'JJC-SEARCH'
           },
         }).then((res) => {
-          localStorage.setItem("Data-Center-Token",res.data.token);
-          localStorage.setItem("vue-admin-beautiful","admin-access Token");
-          this.$router.push('/index');
+          if(res.code == 1){
+              this.$baseMessage("登陆成功", "success");
+              localStorage.setItem("Data-Center-Token",res.data.token);
+              localStorage.setTime("data-userName",res.data.role);
+              localStorage.setItem("vue-admin-beautiful","admin-access Token");
+              _this.$router.push('/index');
+          }else{
+            this.$baseMessage(res.msg, "error");
+          }
         });
-      // this.$refs.loginForm.validate(async (valid) => {
-      //   if (valid) {
-      //     this.loading = true;
-      //     await this.$store.dispatch("user/login", this.loginForm).catch(() => {
-      //       this.loading = false;
-      //     });
-      //     const routerPath =
-      //       this.redirect === "/404" || this.redirect === "/401"
-      //         ? "/"
-      //         : this.redirect;
-      //     await this.$router.push(routerPath).catch(() => {});
-      //     this.loading = false;
-      //   } else {
-      //     return false;
-      //   }
-      // });
     },
   },
 };

@@ -38,36 +38,23 @@ export const constantRoutes = [
       },
     ],
   },
- // {
- //    path: "/personnelManagement",
- //    component: Layout,
- //    redirect: "noRedirect",
- //    name: "PersonnelManagement",
- //    meta: { title: "配置", icon: "users-cog", permissions: ["admin"] },
- //    children: [
- //      {
- //        path: "userManagement",
- //        name: "UserManagement",
- //        component: () =>
- //          import("@/views/personnelManagement/userManagement/index"),
- //        meta: { title: "用户管理" },
- //      },
- //      {
- //        path: "roleManagement",
- //        name: "RoleManagement",
- //        component: () =>
- //          import("@/views/personnelManagement/roleManagement/index"),
- //        meta: { title: "角色管理" },
- //      },
- //      {
- //        path: "menuManagement",
- //        name: "MenuManagement",
- //        component: () =>
- //          import("@/views/personnelManagement/menuManagement/index"),
- //        meta: { title: "菜单管理", badge: "New" },
- //      },
- //    ],
- //  },
+  {
+    path: "/dataindex",
+    component: Layout,
+    redirect: "dataindex",
+    children: [
+      {
+        path: "dataindex",
+        name: "dataindex",
+        component: () => import("@/views/index/dataindex"),
+        meta: {
+          title: "数据中心",
+          icon: "home",
+          affix: true,
+        },
+      },
+    ],
+  },
   {
     path: "/login",
     component: () => import("@/views/login/index"),
@@ -126,23 +113,6 @@ export const asyncRoutes = [
       },
     ],
   },
-  /* {
-    path: "/test",
-    component: Layout,
-    redirect: "noRedirect",
-    children: [
-      {
-        path: "test",
-        name: "Test",
-        component: () => import("@/views/test/index"),
-        meta: {
-          title: "test",
-          icon: "marker",
-          permissions: ["admin"],
-        },
-      },
-    ],
-  }, */
   {
     path: "/personnelManagement",
     component: Layout,
@@ -565,7 +535,9 @@ router.beforeEach(function(to, from, next) {
         return next('/login');
       };
     };
-    store.dispatch("tagsBar/addVisitedRoute", to);
+    if(to.path !== '/login'){
+      store.dispatch("tagsBar/addVisitedRoute", to);
+    };
     next();
 });
 
