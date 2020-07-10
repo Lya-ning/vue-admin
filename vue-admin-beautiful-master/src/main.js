@@ -6,6 +6,8 @@ import store from "./store";
 import router from "./router";
 import "./plugins";
 import request from "@/utils/request";
+import echarts from 'echarts';
+Vue.prototype.$echarts = echarts;
 Vue.prototype.rq = request;
 Vue.config.productionTip = false;
 

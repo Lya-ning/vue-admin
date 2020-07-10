@@ -8,7 +8,7 @@ import VueRouter from "vue-router";
 import Layout from "@/layouts";
 import EmptyLayout from "@/layouts/EmptyLayout";
 import { routerMode } from "@/config/settings";
-
+import store from "@/store";
 Vue.use(VueRouter);
 export const constantRoutes = [
   {
@@ -26,8 +26,48 @@ export const constantRoutes = [
           affix: true,
         },
       },
+      {
+        path: "/order_list",
+        component: () => import("@/views/index/table_order"),
+        hidden: true,
+        meta: {
+          title: "订单列表",
+          icon: "home",
+          affix: true,
+        },
+      },
     ],
   },
+ // {
+ //    path: "/personnelManagement",
+ //    component: Layout,
+ //    redirect: "noRedirect",
+ //    name: "PersonnelManagement",
+ //    meta: { title: "配置", icon: "users-cog", permissions: ["admin"] },
+ //    children: [
+ //      {
+ //        path: "userManagement",
+ //        name: "UserManagement",
+ //        component: () =>
+ //          import("@/views/personnelManagement/userManagement/index"),
+ //        meta: { title: "用户管理" },
+ //      },
+ //      {
+ //        path: "roleManagement",
+ //        name: "RoleManagement",
+ //        component: () =>
+ //          import("@/views/personnelManagement/roleManagement/index"),
+ //        meta: { title: "角色管理" },
+ //      },
+ //      {
+ //        path: "menuManagement",
+ //        name: "MenuManagement",
+ //        component: () =>
+ //          import("@/views/personnelManagement/menuManagement/index"),
+ //        meta: { title: "菜单管理", badge: "New" },
+ //      },
+ //    ],
+ //  },
   {
     path: "/login",
     component: () => import("@/views/login/index"),
@@ -518,5 +558,15 @@ export function resetRouter() {
     routes: constantRoutes,
   }).matcher;
 }
+router.beforeEach(function(to, from, next) {
+  console.log(to);
+    if (!localStorage.getItem("Data-Center-Token")) {
+      if (to.path !== '/login') {
+        return next('/login');
+      };
+    };
+    store.dispatch("tagsBar/addVisitedRoute", to);
+    next();
+});
 
 export default router;

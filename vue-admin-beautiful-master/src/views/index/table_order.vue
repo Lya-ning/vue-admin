@@ -1,29 +1,13 @@
 <template>
   <div class="index-container">
-
-    <el-row :gutter="20">
-      <el-col
-        v-for="(item, index) in iconList"
-        :key="index"
-        :xs="12"
-        :sm="6"
-        :md="3"
-        :lg="3"
-        :xl="3"
-      >
-        <!-- <router-link :to="item.link" target="_blank"> -->
-          <el-card class="icon-panel" shadow="never">
-            <div style="font-weight: bolder;margin-top: -10px;">{{ item.title }}</div>
-            <div style="color: #e2386b;font-size: 18px;margin-top: 10px;">{{ item.num }}</div>
-            <div style="font-weight: bolder;margin-top: 10px;">{{ item.sub_num}}</div>
-          </el-card>
-        <!-- </router-link> -->
-      </el-col>
-      <el-col>
-        <div id="myChart" :style="{height: '300px'}"></div>
-      </el-col>
-    </el-row>
-    <div v-show="show_order">
+<!--   <div class="block">
+      <el-date-picker
+        v-model="value2"
+        type="month"
+        placeholder="选择月">
+      </el-date-picker>
+    </div> -->
+    <div>
       <el-table
         v-loading="listLoading"
         :data="list"
@@ -48,7 +32,7 @@
         ></el-table-column>
 
         <el-table-column
-          show-overflow-tooltip
+          show-overflow-tooltip   
           label="支付金额"
           prop="pay_price"
         ></el-table-column>
@@ -79,7 +63,6 @@
 <script>
 import VabChart from "@/plugins/echarts";
 import VabCount from "@/plugins/vabCount";
-import { mapGetters } from "vuex";
 // import { dependencies, devDependencies } from "../../../package.json";
 // import { getList } from "@/api/changeLog";
 // import { getNoticeList } from "@/api/notice";
@@ -92,12 +75,13 @@ export default {
   },
   data() {
     return {
+      value2: '',
       iconList: [
         {
           title:'触发量',
           num:'0',
           sub_num:'0',
-          link:'/order_list'
+          link:''
         },
         {
           title:'裂变会员',
@@ -130,71 +114,63 @@ export default {
          link:''
         },
       ],
-      list: [
-         {
-           id:'10585',
-           orderid:'1088548',
-           name:"无限年卡",
-           pay_price:"500.00",
-           price_over:'50.00',
-           status:'已激活',
-           number:'x10'
-        },
-        {
-          id:'10585',
-          orderid:'1088548',
-          name:"无限年卡",
-          pay_price:"500.00",
-          price_over:'50.00',
-          status:'已激活',
-          number:'x10'
-        },
-        {
-          id:'10585',
-          orderid:'1088548',
-          name:"无限年卡",
-          pay_price:"500.00",
-          price_over:'50.00',
-          status:'已激活',
-          number:'x10'
-        },
-        {
-          id:'10585',
-          orderid:'1088548',
-          name:"无限年卡",
-          pay_price:"500.00",
-          price_over:'50.00',
-          status:'已激活',
-          number:'x10'
-        },
-        {
-          id:'10585',
-          orderid:'1088548',
-          name:"无限年卡",
-          pay_price:"500.00",
-          price_over:'50.00',
-          status:'已激活',
-          number:'x10'
-        },
-        {
-          id:'10585',
-          orderid:'1088548',
-          name:"无限年卡",
-          pay_price:"500.00",
-          price_over:'50.00',
-          status:'已激活',
-          number:'x10'
-        },
-        {
-          id:'10585',
-          orderid:'1088548',
-          name:"无限年卡",
-          pay_price:"500.00",
-          price_over:'50.00',
-          status:'已激活',
-          number:'x10'
-        },
-     ],
+       list: [{
+         id:'10585',
+         orderid:'1088548',
+         name:"无限年卡",
+         pay_price:"500.00",
+         price_over:'50.00',
+         status:'已激活',
+         number:'x10'
+      },{
+        id:'10585',
+        orderid:'1088548',
+        name:"无限年卡",
+        pay_price:"500.00",
+        price_over:'50.00',
+        status:'已激活',
+        number:'x10'
+      },{
+        id:'10585',
+        orderid:'1088548',
+        name:"无限年卡",
+        pay_price:"500.00",
+        price_over:'50.00',
+        status:'已激活',
+        number:'x10'
+      },{
+        id:'10585',
+        orderid:'1088548',
+        name:"无限年卡",
+        pay_price:"500.00",
+        price_over:'50.00',
+        status:'已激活',
+        number:'x10'
+      },{
+        id:'10585',
+        orderid:'1088548',
+        name:"无限年卡",
+        pay_price:"500.00",
+        price_over:'50.00',
+        status:'已激活',
+        number:'x10'
+      },{
+        id:'10585',
+        orderid:'1088548',
+        name:"无限年卡",
+        pay_price:"500.00",
+        price_over:'50.00',
+        status:'已激活',
+        number:'x10'
+      },{
+        id:'10585',
+        orderid:'1088548',
+        name:"无限年卡",
+        pay_price:"500.00",
+        price_over:'50.00',
+        status:'已激活',
+        number:'x10'
+      }]
     };
   },
   created() {
@@ -203,17 +179,8 @@ export default {
 
     this.drawLine();
   },
-  computed: {
-    ...mapGetters({
-      collapse: "settings/collapse",
-      visitedRoutes: "tagsBar/visitedRoutes",
-      device: "settings/device",
-      routes: "routes/routes",
-    }),
-  },
   methods: {
     drawLine(){
-      let _this = this;
        let myChart = this.$echarts.init(document.getElementById('myChart'));
        myChart.setOption({
             tooltip: {
@@ -292,13 +259,7 @@ export default {
               }
             ]
        });
-       setTimeout(function (){
-         myChart.resize();
-       },300)
-       myChart.on('click', function (params) {
-         // 
-         _this.$router.push('/order_list');
-       });
+       myChart.resize();
        window.addEventListener("resize", function () {
          myChart.resize();
        });

@@ -155,8 +155,7 @@ export default {
             type: 'JJC-SEARCH'
           },
         }).then((res) => {
-          console.log(res.data.token);
-          localStorage.setItem("vue-token",res.data.token);
+          localStorage.setItem("Data-Center-Token",res.data.token);
           localStorage.setItem("vue-admin-beautiful","admin-access Token");
           this.$router.push('/index');
         });
